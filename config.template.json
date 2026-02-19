@@ -1,0 +1,16 @@
+{
+  "environment": "dev",
+  "workspace": {
+    "name": "manufacturing-analytics-ws"
+  },
+  "items": {
+    "sql_database": "manufacturing_sqldb",
+    "lakehouse": "manufacturing_lakehouse",
+    "warehouse": "manufacturing_warehouse"
+  },
+  "orchestration": {
+    "watermark_table": "ops_watermark",
+    "run_log_table": "ops_run_log",
+    "metrics_table": "ops_table_metrics"
+  }
+}

@@ -1,0 +1,16 @@
+# Mac system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment config files
+config.dev.json
+config.prod.json
