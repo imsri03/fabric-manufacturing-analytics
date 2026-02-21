@@ -81,3 +81,50 @@ inv_snap.write.mode("overwrite").format("delta").saveAsTable("gold_inventory_sna
 print("gold_inventory_snapshot =", spark.table("gold_inventory_snapshot").count())
 
 ##---
+
+# --------------------------------------------------
+# 6) Pipeline Run Summary Logging
+# --------------------------------------------------
+
+from pyspark.sql.types import StructType, StructField, StringType, LongType, TimestampType
+from pyspark.sql.functions import current_timestamp
+import uuid
+
+# Create run_id for Gold layer
+run_id = str(uuid.uuid4())
+print("Gold run_id =", run_id)
+
+# Ensure summary table exists
+spark.sql("""
+CREATE TABLE IF NOT EXISTS pipeline_run_summary (
+    run_id STRING,
+    gold_production_rows BIGINT,
+    gold_quality_rows BIGINT,
+    gold_inventory_rows BIGINT,
+    logged_at TIMESTAMP
+)
+USING DELTA
+""")
+
+# Collect row counts
+production_count = spark.table("gold_production_daily").count()
+quality_count = spark.table("gold_quality_daily").count()
+inventory_count = spark.table("gold_inventory_snapshot").count()
+
+summary_schema = StructType([
+    StructField("run_id", StringType(), False),
+    StructField("gold_production_rows", LongType(), False),
+    StructField("gold_quality_rows", LongType(), False),
+    StructField("gold_inventory_rows", LongType(), False),
+])
+
+summary_row = [(run_id, production_count, quality_count, inventory_count)]
+
+df_summary = spark.createDataFrame(summary_row, schema=summary_schema) \
+    .withColumn("logged_at", current_timestamp())
+
+df_summary.write.mode("append").format("delta").saveAsTable("pipeline_run_summary")
+
+print("Pipeline summary logged successfully.")
+
+##--- 
