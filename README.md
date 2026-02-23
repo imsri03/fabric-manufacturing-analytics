@@ -323,8 +323,3 @@ This project was built as a portfolio demonstration of end-to-end data engineeri
 
 
 
-## 📸 Visual Walkthrough
-
-See detailed architecture screenshots here:
-
-[Project Visual Walkthrough](00_docs/visual_walkthrough.md)
