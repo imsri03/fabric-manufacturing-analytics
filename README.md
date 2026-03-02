@@ -1,3 +1,9 @@
+## 🏗 Architecture Diagram
+
+<p align="center">
+  <img src="00_docs/Screenshots/Architectural_Diagram_Fabric.png" width="1000">
+</p>
+
 🏭 Fabric Manufacturing Analytics Platform
 
 End-to-End Medallion Data Engineering Project using Microsoft Fabric
